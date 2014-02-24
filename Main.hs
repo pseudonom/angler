@@ -6,9 +6,13 @@ module Main where
 
 import           Control.Applicative         ((<$>))
 import           Data.Foldable               (foldMap)
+import qualified Data.List                   as L (head)
 import           Data.Monoid                 ((<>))
 import           Prelude                     hiding (head, init, last, length,
                                               tail, zipWith)
+import           System.Console.GetOpt       (ArgDescr (..), ArgOrder (..),
+                                              OptDescr (..), getOpt)
+import           System.Environment          (getArgs)
 
 import           Data.HashMap.Strict         (HashMap)
 import           Data.Text                   (Text, isInfixOf)
@@ -18,8 +22,10 @@ import           Data.Text.Lazy              (toStrict)
 import           Data.Vector                 (Vector, head, length, tail)
 import           Happstack.Lite              (Browsing (..), Method (..),
                                               Response, ServerPart,
-                                              asContentType, dir, getHeaderM,
-                                              lookText, method, msum, ok, serve,
+                                              asContentType,
+                                              defaultServerConfig, dir,
+                                              getHeaderM, lookText, method,
+                                              msum, ok, port, serve,
                                               serveDirectory, serveFile,
                                               toResponse)
 import           Text.Blaze.Html5            (Html, toHtml, (!))
@@ -36,9 +42,13 @@ import           Thesaurus                   (Thes, loadThes)
 
 main :: IO ()
 main = do
+  p <- L.head . (\(a, _, _) -> a) . getOpt Permute [heroku] <$> getArgs
   e <- loadEtyms "data/etym.csv"
   t <- loadThes "data/moby-thesaurus.dict"
-  serve Nothing $ app e t
+  serve (Just defaultServerConfig { port = p }) $ app e t
+
+heroku :: OptDescr Int
+heroku = Option ['p'] [] (ReqArg read "PORT") "Port to serve"
 
 app :: HashMap Target Origin -> Thes -> ServerPart Response
 app e t = msum
