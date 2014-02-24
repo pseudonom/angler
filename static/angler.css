@@ -1,0 +1,120 @@
+body {
+  background-color: rgb(231,221,192);
+  color: #444958;
+  font-family: 'Uncial Antiqua', serif;
+  hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+}
+a {
+  color: inherit;
+}
+input[type=submit] {
+  border-radius: 5px;
+  border: 0;
+  color: #DC143C;
+  font-family: 'Uncial Antiqua', serif;
+  background-color: #CCB647;
+  font-size: 1.5em;
+  margin: 10px 0 20px 0;
+}
+form {
+  height: 90%;
+}
+textarea {
+  font-family: 'Uncial Antiqua', serif;
+  height: 60vh;
+  width: 90%;
+  border: none;
+  border-radius: 10px;
+  background-color: hsl(45,45%,78%);
+  resize: none;
+}
+ul {
+  list-style-type: none;
+  border-radius: 5px;
+}
+.marginalia {
+  min-height: 70vh;
+  padding: 20px;
+  border-style: solid;
+  border-width: 120px;
+  border-image: url("acanthus.png") 38.2% 0% 0% 38.2% round;
+  border-bottom-style: none;
+  border-right-style: none;
+}
+.single-column {
+  max-width: 30em;
+}
+.multi-column {
+  -moz-column-count: 2;
+  column-count: 2;
+  max-width: 60em;
+}
+.option.current {
+  display: none;
+}
+
+br,
+span {
+  padding: 2px;
+  border-radius: 5px;
+  position: relative;
+  outline: 0;
+  display: inline-block;
+  margin: 0;
+}
+.selection {
+  background-color: #6AAB8E;
+}
+
+.not-lat::after,
+.no-syn::after,
+.no-etym::after,
+.tooltip {
+  text-align: center;
+  background-color: #0047AB;
+  display: none;
+  color: #dedede;
+  position: absolute;
+  padding: 5px;
+  border-radius: 5px;
+  z-index: 1;
+}
+.tooltip {
+  top: 0.8em;
+}
+.not-lat::after,
+.no-syn::after,
+.no-etym::after {
+  top: 1.7em;
+  left: 0;
+}
+span.not-lat:focus::after,
+span.no-syn:focus::after,
+span.no-etym:focus::after,
+span:focus .tooltip {
+  display: inline;
+}
+.no-etym::after {
+  content: "Couldn't find Anglo-Saxon synonyms"
+}
+.not-lat::after {
+  content: "Not a Latinate word";
+}
+.no-syn::after {
+  content: 'Couldn\'t find synonyms';
+}
+
+span:first-child {
+  display: inline;
+}
+.first-letter {
+  float: left;
+  display: inline;
+  color: #DC143C;
+}
+.first-letter + span {
+  margin-left: -1em;
+}
