@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(231,221,192);
+  background-color: #e7ddc0;
   color: #444958;
   font-family: 'Uncial Antiqua', serif;
   hyphens: auto;
@@ -40,7 +40,7 @@ ul {
   padding: 20px;
   border-style: solid;
   border-width: 120px;
-  border-image: url("acanthus.png") 38.2% 0% 0% 38.2% round;
+  border-image: url("acanthus.opti.png") 38.2% 0 0 38.2% round;
   border-bottom-style: none;
   border-right-style: none;
 }
