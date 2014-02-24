@@ -84,8 +84,8 @@ annotate :: InLang -> HashMap Text (Either Fail (Vector Text)) -> Break I.Word -
             TextInfo
 annotate (InLang il) h b
   | brkStatus b == I.Letter =
-    WordLike $ WordInfo (brkBreak b)
-    (h ! toLower (locale il) (brkBreak b))
+    WordLike . WordInfo (brkBreak b) $
+    h ! toLower (locale il) (brkBreak b)
   | otherwise = NonWord . brkBreak $ b
 
 newtype BadLang = BadLang { getBadLang :: Lang }

@@ -93,6 +93,7 @@ template body = toResponse $ do
 
 htmlify :: IsWebKit -> Vector TextInfo -> Html
 htmlify wk ts = H.article ! A.class_ (cc wk) $ spanify first (head ts) <> foldMap (spanify toHtml) (tail ts) where
+  -- NBSP ensures equal line-height for drop cap
   spanify _ (NonWord "\r\n") = H.br >> H.span " "
   spanify h (NonWord t) = h t
   spanify h (WordLike (WordInfo o (Left NoSyn))) =
