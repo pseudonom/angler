@@ -91,12 +91,12 @@ htmlify wk ts = H.article ! A.class_ (cc wk) $ spanify first (head ts) <> foldMa
     anno "not-lat" $ h o
   spanify h (WordLike (WordInfo o (Left NoEtym))) =
     anno "no-etym" $ h o
-  spanify h (WordLike (WordInfo o (Right syns))) =
+  spanify _ (WordLike (WordInfo o (Right syns))) =
     H.span ! A.class_ "select" ! A.tabindex "0" $ do
       H.ul ! A.class_ "tooltip" $
         optify "option current original" o <>
         foldMap (optify "option") syns
-      H.span ! A.class_ "selection" $ h o where
+      H.span ! A.class_ "selection" $ toHtml o where
         optify cl t = H.li ! A.class_ cl ! H.dataAttribute "value" (H.toValue t) $
                       toHtml t
   cc WebKit = "single-column"
