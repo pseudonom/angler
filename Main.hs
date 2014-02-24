@@ -86,7 +86,6 @@ template body = toResponse $ do
   H.docTypeHtml $ do
     H.head $ do
       H.title "Angler"
-      H.meta ! A.name "viewport" ! A.content "width=device-width, initial-scale=1"
       H.link ! A.rel "stylesheet" ! A.type_ "text/css" ! A.href "static/angler.min.css"
       H.link ! A.rel "stylesheet" ! A.type_ "text/css" ! A.href "http://fonts.googleapis.com/css?family=Uncial+Antiqua"
       H.script ! A.type_ "text/javascript" $ js
