@@ -64,8 +64,6 @@ app e t = msum
 
 expire :: ServerPart ()
 expire = setHeaderM "Cache-Control" "max-age=86400"
--- compress :: ServerPart ()
--- compress = setHeaderM "Content-Encoding" "gzip"
 
 data IsWebKit = WebKit | NotWebKit
 
@@ -90,8 +88,8 @@ template body = toResponse $ do
       H.title "Angler"
       H.script ! A.type_ "text/javascript" $ js
     H.body ! A.class_ "marginalia" $ body
-  H.link ! A.rel "stylesheet" ! A.type_ "text/css" ! A.href "static/angler.min.css"
-  H.link ! A.rel "stylesheet" ! A.type_ "text/css" ! A.href "http://fonts.googleapis.com/css?family=Uncial+Antiqua"
+    H.link ! A.rel "stylesheet" ! A.type_ "text/css" ! A.href "static/angler.min.css"
+    H.link ! A.rel "stylesheet" ! A.type_ "text/css" ! A.href "http://fonts.googleapis.com/css?family=Uncial+Antiqua"
 
 htmlify :: IsWebKit -> Vector TextInfo -> Html
 htmlify wk ts = H.article ! A.class_ (cc wk) $ spanify first (head ts) <> foldMap (spanify toHtml) (tail ts) where
