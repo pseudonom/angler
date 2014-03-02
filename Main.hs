@@ -87,7 +87,8 @@ template body = toResponse $ do
     H.head $ do
       H.title "Angler"
       H.link ! A.rel "stylesheet" ! A.type_ "text/css" ! A.href "static/angler.min.css"
-      H.link ! A.rel "stylesheet" ! A.type_ "text/css" ! A.href "http://fonts.googleapis.com/css?family=Uncial+Antiqua"
+      H.link ! A.rel "stylesheet" ! A.type_ "text/css" ! A.href
+        "http://fonts.googleapis.com/css?family=Almendra"
       H.script ! A.type_ "text/javascript" $ js
     H.body ! A.class_ "marginalia" $ body
 
@@ -113,40 +114,9 @@ htmlify wk ts = H.article ! A.class_ (cc wk) $ spanify first (head ts) <> foldMa
   cc WebKit = "single-column"
   cc NotWebKit = if length ts > 400 then "multi-column" else "single-column"
   first w = do
-    firstLetter $ T.head w
+    H.span ! A.class_ "first-letter" $ toHtml $ T.head w
     H.span . toHtml $ T.tail w
   anno cl o = H.span ! A.tabindex "0" ! A.class_ cl $ o
-
-firstLetter :: Char -> Html
-firstLetter c
-  | 'A' <- c = go "margin: -0.2em   0.06em -0.35em -0.1em;  font-size: 7.7em;"
-  | 'B' <- c = go "margin: -0.25em  0      -0.5em  -0.1em;  font-size: 8.5em;"
-  | 'C' <- c = go "margin: -0.25em  0.1em  -0.4em  -0.05em; font-size: 8em;"
-  | 'D' <- c = go "margin: 0.05em   0      -0.4em  0;       font-size: 6em;"
-  | 'E' <- c = go "margin: -0.25em  0.1em  -0.5em  -0.05em; font-size: 8.5em;"
-  | 'F' <- c = go "margin: -0.25em  0.2em  -0.2em  -0.1em;  font-size: 6.6em;"
-  | 'G' <- c = go "margin: -0.25em  0.1em  -0.4em  -0.05em; font-size: 8em;"
-  | 'H' <- c = go "margin: -0.025em 0      -0.4em  -0.08em; font-size: 6.5em;"
-  | 'I' <- c = go "margin: -0.25em  0.1em  -0.4em  -0.1em;  font-size: 8.5em;"
-  | 'J' <- c = go "margin: -0.25em  0.15em -0.1em  0.05em;  font-size: 6em;"
-  | 'K' <- c = go "margin: -0.03em  0.1em  -0.3em  -0.1em;  font-size: 6.3em;"
-  | 'L' <- c = go "margin: -0.03em  0.05em -0.3em  -0.1em;  font-size: 6.3em;"
-  | 'M' <- c = go "margin: -0.25em  0.05em -0.3em  -0.05em; font-size: 8em;"
-  | 'N' <- c = go "margin: -0.25em  0.1em  -0.4em  -0.1em;  font-size: 8em;"
-  | 'O' <- c = go "margin: -0.25em  0.05em -0.4em  -0.05em; font-size: 8.2em;"
-  | 'P' <- c = go "margin: -0.25em  0.1em  -0.2em  -0.1em;  font-size: 6em;"
-  | 'Q' <- c = go "margin: -0.24em  0.15em -0.2em  -0;      font-size: 6em;"
-  | 'R' <- c = go "margin: -0.25em  0.05em -0.4em  -0.1em;  font-size: 8em;"
-  | 'S' <- c = go "margin: -0.25em  0.05em -0.4em  -0.07em; font-size: 8em;"
-  | 'T' <- c = go "margin: -0.25em  0.15em -0.4em  0;       font-size: 8.3em;"
-  | 'U' <- c = go "margin: -0.25em  0.1em  -0.4em  -0.05em; font-size: 8.3em;"
-  | 'V' <- c = go "margin: -0.25em  0.15em -0.4em  -0.05em; font-size: 8.3em;"
-  | 'W' <- c = go "margin: -0.25em  0.15em -0.4em  -0.1em;  font-size: 8.3em;"
-  | 'X' <- c = go "margin: -0.25em  0.13em -0.4em  -0.1em;  font-sise: 8.3em;"
-  | 'Y' <- c = go "margin: -0.25em  0.15em -0.4em  -0.05em; font-size: 8.3em;"
-  | 'Z' <- c = go "margin: -0.25em  0.13em -0.4em  0;       font-size: 8.1em;"
-  | otherwise = toHtml c where
-    go st = H.span ! A.class_ "first-letter" ! A.style st $ toHtml c
 
 angle :: HashMap Target Origin -> Thes -> Text -> Vector TextInfo
 angle e s = analyze e s (InLang $ Lang "Eng")

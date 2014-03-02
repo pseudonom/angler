@@ -1,7 +1,7 @@
 body {
   background-color: #e7ddc0;
   color: #444958;
-  font-family: 'Uncial Antiqua', serif;
+  font-family: 'Almendra', serif;
   hyphens: auto;
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
@@ -14,7 +14,7 @@ input[type=submit] {
   border-radius: 5px;
   border: 0;
   color: #DC143C;
-  font-family: 'Uncial Antiqua', serif;
+  font-family: 'Almendra', serif;
   background-color: #CCB647;
   font-size: 1.5em;
   margin: 10px 0 20px 0;
@@ -23,7 +23,7 @@ form {
   height: 90%;
 }
 textarea {
-  font-family: 'Uncial Antiqua', serif;
+  font-family: 'Almendra', serif;
   height: 60vh;
   width: 90%;
   border: none;
@@ -114,6 +114,8 @@ span:first-child {
   float: left;
   display: inline;
   color: #DC143C;
+  font-size: 9.3em;
+  margin: -0.25em 0.1em -0.4em -0.1em;
 }
 .first-letter + span {
   margin-left: -1em;
