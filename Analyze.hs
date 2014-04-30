@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ViewPatterns      #-}
 
 module Analyze where
 
@@ -95,20 +96,21 @@ newtype InLang = InLang { getInLang :: Lang }
 synSet :: HashMap Target Origin -> Thes ->
           InLang -> BadLang -> GoodLang ->
           Vector Text -> HashMap Text (Either Fail (Vector Text))
-synSet e s (InLang il) (BadLang bl) gl ts  =
+synSet e s (InLang il) bl'@(BadLang bl) gl ts  =
   H.fromList $ zip ts' (is <$> ts') where
     is w | rooted e bl . Target $ w' =
-      either (const $ langSyns e s gl w'') Right $ langSyns e s gl w'
+      either (const $ langSyns e s bl' gl w'') Right $ langSyns e s bl' gl w'
          | otherwise = Left NotBad where
            w' = Word il w
            w'' = Word il . stem (algo il) $ w
     ts' = nubSort . (toLower (locale il) <$>) . V.toList $ ts
 
 -- Lang of Word ought to be same as language of thesaurus
-langSyns :: HashMap Target Origin -> Thes ->
+langSyns :: HashMap Target Origin -> Thes -> BadLang ->
             GoodLang -> Word -> Either Fail (Vector Text)
-langSyns e s (GoodLang gl) (Word il w) =
+langSyns e s (BadLang bl) (GoodLang gl) (Word il w) =
   origLang <=< note NoSyn . lookup w $ s where
     origLang ss | null ss' = Left NoEtym
                 | otherwise = Right ss' where
-                  ss' = filter (rooted e gl . Target . Word il) ss
+                  ss' = filter (\(Target . Word il -> t) ->
+                                rooted e gl t && not (rooted e bl t)) ss
